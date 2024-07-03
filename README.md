@@ -1,0 +1,2 @@
+# TestECPlatformWebAPI
+OpenAPI(RESTfulAPI)の基盤部構築におけるコアロジックの工夫をまとめた技術資料です。複数のECサイトが連携するプラットフォームを例にしています。（ビジネスロジックを除く）
