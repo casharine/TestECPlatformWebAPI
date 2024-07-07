@@ -1,0 +1,5 @@
+C:\develop\KAKI_C\myDev\For_KLINK_WEB_API\KLINKWebAPI\KLINK.Collaborations.Contracts.Kounyu\obj\Debug\net6.0\Kounyu.csproj.AssemblyReference.cache
+C:\develop\KAKI_C\myDev\For_KLINK_WEB_API\KLINKWebAPI\KLINK.Collaborations.Contracts.Kounyu\obj\Debug\net6.0\Kounyu.GeneratedMSBuildEditorConfig.editorconfig
+C:\develop\KAKI_C\myDev\For_KLINK_WEB_API\KLINKWebAPI\KLINK.Collaborations.Contracts.Kounyu\obj\Debug\net6.0\Kounyu.AssemblyInfoInputs.cache
+C:\develop\KAKI_C\myDev\For_KLINK_WEB_API\KLINKWebAPI\KLINK.Collaborations.Contracts.Kounyu\obj\Debug\net6.0\Kounyu.AssemblyInfo.cs
+C:\develop\KAKI_C\myDev\For_KLINK_WEB_API\KLINKWebAPI\KLINK.Collaborations.Contracts.Kounyu\obj\Debug\net6.0\Kounyu.csproj.CoreCompileInputs.cache

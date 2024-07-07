@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "kIpgzRLDz+hX2coxh0fOSDHGS7Ohr77gx9fiCqcg8Xw=",
+  "Source": "TestECPlatformWebAPI",
+  "BasePath": "_content/TestECPlatformWebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

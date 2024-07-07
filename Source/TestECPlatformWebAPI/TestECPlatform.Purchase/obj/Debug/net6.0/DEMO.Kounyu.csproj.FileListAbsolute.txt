@@ -1,0 +1,15 @@
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\bin\Debug\net6.0\DEMO.Kounyu.deps.json
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\bin\Debug\net6.0\DEMO.Kounyu.dll
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\bin\Debug\net6.0\DEMO.Kounyu.pdb
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\bin\Debug\net6.0\WebAPIBasis.dll
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\bin\Debug\net6.0\WebAPIBasis.pdb
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.csproj.AssemblyReference.cache
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.GeneratedMSBuildEditorConfig.editorconfig
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.AssemblyInfoInputs.cache
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.AssemblyInfo.cs
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.csproj.CoreCompileInputs.cache
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.csproj.CopyComplete
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.dll
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\refint\DEMO.Kounyu.dll
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\DEMO.Kounyu.pdb
+C:\develop\GitEnt\DEMOWebAPI\DEMO.Kounyu\obj\Debug\net6.0\ref\DEMO.Kounyu.dll

@@ -1,0 +1,1155 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KLINKWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:KLINKWebAPI.Controllers.BuyingLinkController">
+            <summary>
+            市場連携API購入コントローラクラス
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Controllers.BuyingLinkController.#ctor(Microsoft.Extensions.Logging.ILogger{KLINKWebAPI.Controllers.BuyingLinkController})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="logger">ログオブジェクト</param>
+        </member>
+        <member name="M:KLINKWebAPI.Controllers.BuyingLinkController.PostBuyingLinkData(KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase)">
+            <summary>
+            連携購入用API
+            </summary>
+            <param name="body">荷受バーコード情報</param>
+            <response code="200">処理成功、業務エラーもここに含まれる</response>
+            <response code="400">必須パラメーターが足りないなどuserのリクエストに誤りがある。</response>
+            <remarks>
+            <para>更新履歴</para>
+            <para>2023/04 Y.ITO 新規作成</para>
+            </remarks>
+        </member>
+        <member name="T:KLINKWebAPI.Controllers.GetJyojyoController">
+            <summary>
+            花き仲卸広域連携プラットフォーム用認証API
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Controllers.GetJyojyoController.#ctor(Microsoft.Extensions.Logging.ILogger{KLINKWebAPI.Controllers.GetJyojyoController})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="logger">ログオブジェクト</param>
+        </member>
+        <member name="M:KLINKWebAPI.Controllers.GetJyojyoController.PostGetJyojyo(KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase)">
+            <summary>
+            上場データ取得API
+            </summary>
+            <param name="body">認証情報</param>
+            <response code="200">処理成功、業務エラーもここに含まれる</response>
+            <response code="550">必須パラメーターが足りないなどuserのリクエストに誤りがある。</response>
+            <remarks>
+            <para>更新履歴</para>
+            <para>2023/5 Y.ITO 新規作成</para>
+            </remarks>
+        </member>
+        <member name="T:KLINKWebAPI.Controllers.TestConnectionController">
+            <summary>
+            疎通確認用
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Controllers.TestConnectionController.#ctor(Microsoft.Extensions.Logging.ILogger{KLINKWebAPI.Controllers.TestConnectionController})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="logger">ログオブジェクト</param>
+            <param name="appSettings">appsettings.json情報</param>
+        </member>
+        <member name="M:KLINKWebAPI.Controllers.TestConnectionController.GetTestConnectionController">
+            <summary>
+            疎通確認用Get（引数不要）
+            </summary>
+            <response code="200">処理成功、業務エラーもここに含まれる</response>
+            <response code="400">必須パラメーターが足りないなどのリクエストに誤りがある。</response>
+            <remarks>
+            <para>更新履歴</para>
+            <para>2023年1月17日 Y.Ito 新規作成</para>
+            </remarks>
+        </member>
+        <member name="T:KLINKWebAPI.Models.ErrorResult">
+            <summary>
+            汎用リザルトクラス。各レスポンスクラスのメンバで用いる。
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.ErrorResult.errorCode">
+            <summary>
+            エラーコード
+            </summary>
+            <value>OKの場合:0、エラー有り:0以外のコード</value>
+        </member>
+        <member name="P:KLINKWebAPI.Models.ErrorResult.errorMessage">
+            <summary>
+            エラーコードメッセージ
+            </summary>
+            <value>正常終了:"なし"、エラー有り:エラー内容</value>
+        </member>
+        <member name="M:KLINKWebAPI.Models.ErrorResult.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.ErrorResult.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.ErrorResult.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.ErrorResult.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.ErrorResult.Equals(KLINKWebAPI.Models.ErrorResult)">
+            <summary>
+            Returns true if ErrrorResult instances are equal
+            </summary>
+            <param name="other">Instance of ErrrorResult to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.ErrorResult.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase">
+            <summary>
+            INbodyのモデル 
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.USER_ID">
+            <summary>
+            ユーザID
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.OROSI_CD_SHOZOKU">
+            <summary>
+            購入時使用した買参人の卸コード ※API化時追加
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.OROSI_CD_SHOHIN">
+            <summary>
+            購入した商品卸コード ※※API化時変更：旧OROSI_CD
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.OROSI_CD_SITE">
+            <summary>
+            購入したサイト卸コード※API化時追加
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.HAN_LANE">
+            <summary>
+            販売レーン
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.SMAPHO_FLG">
+            <summary>
+            スマホフラグ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.IS_PLAIN_TANKA">
+            <summary>
+            単価入力フラグ 0:上場単価使用 1:入力単価
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.TAN_CD">
+            <summary>
+            担当者コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.NYUSATSU_FLG">
+            <summary>
+            入札フラグ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.NYUSATSU_NO">
+            <summary>
+            入札No
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.RENBAN">
+            <summary>
+            在宅セリの成約No
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.KIBO_TANKA">
+            <summary>
+            商品の子単価(単価チェック用) ※API化時に追加
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.data">
+            <summary>
+            結果のデータ配列
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.Equals(KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase)">
+            <summary>
+            Returns true if GetSeikInfoModelModel instances are equal
+            </summary>
+            <param name="other">Instance of GetSeikInfoModelModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase">
+            <summary>
+            INbodyのモデル 
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.SITE_ID">
+            <summary>
+            サイトID
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.OROSI_CD_SHOHIN">
+            <summary>
+            上場データを取得する商品卸コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.OROSI_CD_SHOZOKU">
+            <summary>
+            上場データを取得する所属卸コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.USER_ID">
+            <summary>
+            ユーザID
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.KAIUKE_CD">
+            <summary>
+            買参人コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.KAIUKE_CD_EDA">
+            <summary>
+            買参人コード枝番
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.Equals(KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase)">
+            <summary>
+            Returns true if GetSeikInfoModelModel instances are equal
+            </summary>
+            <param name="other">Instance of GetSeikInfoModelModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.KLINKWebAPI.Models.PostGetJyojyoRequestBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Models.PostBuyingLinkRequestMain">
+            <summary>
+            INbodyの結果配列のモデル
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.JYOJYO_P_KEY_LIST">
+            <summary>
+            T_JYOJYOのP_KEY
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.JYOJYO_SUB_P_KEY_LIST">
+            <summary>
+            T_JYOJYO_SUBのP_KEY
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.SEIK_P_KEY_LIST">
+            <summary>
+            T_SEIKのP_KEY
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.BSAN_CD_LIST">
+            <summary>
+            買参人コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.SEIK_CD_LIST">
+            <summary>
+            請求先コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.HAN_KBN_LIST">
+            <summary>
+            販売区分
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.IRISU_LIST">
+            <summary>
+            入数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.KUTISU_LIST">
+            <summary>
+            口数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.TNK_KBN_LIST">
+            <summary>
+            単価区分
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.TANKA_LIST">
+            <summary>
+            単価
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.KOUNYU_KOUKAI_FLG_LIST">
+            <summary>
+            購入公開フラグ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.PRI_FLG_LIST">
+            <summary>
+            プリフラグリスト
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkRequestMain.SOROI_KBN">
+            <summary>
+            揃い区分
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkRequestMain.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkRequestMain.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkRequestMain.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkRequestMain.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkRequestMain.Equals(KLINKWebAPI.Models.PostBuyingLinkRequestMain)">
+            <summary>
+            Returns true if GetSeikInfoModelModel instances are equal
+            </summary>
+            <param name="other">Instance of GetSeikInfoModelModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkRequestMain.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Models.PostBuyingLinkResponseBase">
+            <summary>
+            購入連携データ取得レスポンス
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkResponseBase.ErrorCode">
+            <summary>
+            エラーコード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkResponseBase.ErrorMessage">
+            <summary>
+            メッセージ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostBuyingLinkResponseBase.Seik_P_KEY">
+            <summary> 
+            結果のデータ配列 
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkResponseBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkResponseBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkResponseBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkResponseBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkResponseBase.Equals(KLINKWebAPI.Models.PostBuyingLinkResponseBase)">
+            <summary>
+            Returns true if PostBuyingLinkRequestModel instances are equal
+            </summary>
+            <param name="other">Instance of PostBuyingLinkRequestModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostBuyingLinkResponseBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Models.PostGetJyojyoResponseBase">
+            <summary>
+            購入連携データ取得レスポンス
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseBase.ErrorCode">
+            <summary>
+            エラーコード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseBase.ErrorMessage">
+            <summary>
+            メッセージ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseBase.DataCount">
+            <summary>
+            メッセージ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseBase.data">
+            <summary> 
+            結果のデータ配列 
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseBase.Equals(KLINKWebAPI.Models.PostGetJyojyoResponseBase)">
+            <summary>
+            Returns true if PostBuyingLinkRequestModel instances are equal
+            </summary>
+            <param name="other">Instance of PostBuyingLinkRequestModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Models.PostGetJyojyoResponseMain">
+            <summary>
+            連携データ送信用のモデル
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.OROSI_CD">
+            <summary>
+            上場データの卸コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.OROSI_NM">
+            <summary>
+            上場データの卸名
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.JYOJYO_P_KEY">
+            <summary>
+            卸毎で上場データを管理できるユニークNO。内部的なユニークキー
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SUB_P_KEY">
+            <summary>
+            卸毎で上場データを管理の子のユニークNO。内部的なユニークキー
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KOWAKE_NO">
+            <summary>
+            上場データサブの小分けNo
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.IRISU">
+            <summary>
+            上場データサブの入数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KOUKAI_TNK">
+            <summary>
+            上場データサブの公開単価
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.TANKA_KBN">
+            <summary>
+            上場データサブの単価区分（1：本単価2：口単価）
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_FLG">
+            <summary>
+            上場データサブのプライス単価フラグ（0：設定なし：1：設定あり）
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_TNK1">
+            <summary>
+            上場データサブのプライス単価1
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_SU1">
+            <summary>
+            上場データサブのプライス数量1
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_TNK2">
+            <summary>
+            上場データサブのプライス単価2
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_SU2">
+            <summary>
+            上場データサブのプライス数量2
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_TNK3">
+            <summary>
+            上場データサブのプライス単価3
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PRCE_SU3">
+            <summary>
+            上場データサブのプライス数量3
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.BIKO_NM">
+            <summary>
+            上場データサブの備考
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KEITI_CD">
+            <summary>
+            切鉢区分（1：切花：2：鉢物）
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KEITI_NM">
+            <summary>
+            切鉢名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SERI_DT">
+            <summary>
+            上場データのセリ日　　データフォーマットはyyyy・mm・dd
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.NIUKE_NO">
+            <summary>
+            卸ごとに管理している荷受データの管理番号親
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.GYOU_NO">
+            <summary>
+            卸ごとに管理している荷受データの管理番号行。
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.NYK_LANE">
+            <summary>
+            上場データの入荷レーン
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SYOHIN_CD">
+            <summary>
+            上場データの商品（品種）コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SYOHIN_NM">
+            <summary>
+            上場データの商品（品種）名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.HINMOK_CD">
+            <summary>
+            上場データの品目コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.HINMOK_NM">
+            <summary>
+            上場データの品目名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.IRO_CD">
+            <summary>
+            上場データの色コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.IRO_NM">
+            <summary>
+            上場データの色名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SANCHI_CD">
+            <summary>
+            上場データの産地コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SANCHI_NM">
+            <summary>
+            上場データの産地名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SEISAN_CD">
+            <summary>
+            上場データの生産者コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SEISAN_NM">
+            <summary>
+            上場データの生産者名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.TOUKYU_CD">
+            <summary>
+            上場データの等級コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.TOUKYU_NM">
+            <summary>
+            上場データの等級名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KAIKYU_CD">
+            <summary>
+            上場データの階級コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KAIKYU_NM">
+            <summary>
+            上場データの階級名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KIKAKU_CD">
+            <summary>
+            上場データの規格コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KIKAKU_NM">
+            <summary>
+            上場データの規格名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KOUKAI_SU">
+            <summary>
+            上場データの公開数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.NIUKE_BIKO_CD">
+            <summary>
+            上場データの荷受備考コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.NIUKE_BIKO">
+            <summary>
+            上場データの荷受備考
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.NIUKE_BIKO2">
+            <summary>
+            上場データの荷受備考2
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.CHAK_TM">
+            <summary>
+            上場データの着荷時間
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.TANI_CD">
+            <summary>
+            上場データの単位コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.TANI_NM">
+            <summary>
+            上場データの単位名
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ZANSU">
+            <summary>
+            上場データの残口数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SUNPO">
+            <summary>
+            上場データの変換前産地コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.FREEWORD">
+            <summary>
+            上場データの変換前産地名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.BUNRUICD">
+            <summary>
+            上場データの変換前色コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.BUNRUINM">
+            <summary>
+            上場データの変換前色名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SHOUDAN_FLG">
+            <summary>
+            上場データの変換前品目コード
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ORG_HINMOK_NM">
+            <summary>
+            上場データの変換前品目名称
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.OKIBACD">
+            <summary>
+            上場データの残口数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.OKIBA">
+            <summary>
+            上場データの残口数
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.MINI_TANKA">
+            <summary>
+            上場区分
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.SOUFLG">
+            <summary>
+            上場データサブのプライス単価4
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.HZKUCH">
+            <summary>
+            上場データサブのプライス数量4
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.HZSURY">
+            <summary>
+            上場データサブのプライス単価5
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.DAITSUKE">
+            <summary>
+            上場データサブのプライス数量5
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.TOMENE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.HURISU">
+            <summary>
+            品種
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.AVG_TNK">
+            <summary>
+            平均単価
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ZNITIBI">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ZANFLG">
+            <summary>
+            残フラグ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ZAITAKU_FLG">
+            <summary>
+            在宅フラグ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.WORK_KBN">
+            <summary>
+            ワーク区分
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.OWARINE">
+            <summary>
+            終値
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.WEB_HINSNM">
+            <summary>
+            web品種名
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ID_WEB_KOUKAI_KANRI">
+            <summary>
+            ID公開管理
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KOUKAI_FLG">
+            <summary>
+            公開フラグ
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.JIOROSI_FLG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.LINK_RENKEI_FLG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PIC_URL1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PIC_URL2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.PIC_URL3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:KLINKWebAPI.Models.PostGetJyojyoResponseMain.KOWAKE_FLG">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseMain.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseMain.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseMain.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseMain.Equals(KLINKWebAPI.Models.PostGetJyojyoResponseMain)">
+            <summary>
+            Returns true if MASTERInlineResult instances are equal
+            </summary>
+            <param name="other">Instance of MASTERInlineResult to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:KLINKWebAPI.Models.PostGetJyojyoResponseMain.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:KLINKWebAPI.Program">
+            <summary>
+            エントリーポイント
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Program.Main(System.String[])">
+            <summary>
+            main関数
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:KLINKWebAPI.Program.BuildWebHost(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:KLINKWebAPI.Startup">
+            <summary>
+            APIのスタートアップ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Startup.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="loggerFactory"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:KLINKWebAPI.Startup.Configuration">
+            <summary>
+            アクセサ
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:KLINKWebAPI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="T:KLINKWebAPI.Utilities.APIUtility">
+            <summary>
+            WebAPI用ユーティリティクラス
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Utilities.APIUtility.StartUpAPI``1(Microsoft.Extensions.Logging.ILogger{``0},System.Object,System.String,System.String,System.String)">
+            <summary>
+            APIにおいて、共通の開始処理、DBにログを残す
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="iLogger"></param>
+            <param name="iBody"></param>
+            <param name="userID"></param>
+            <param name="prgID"></param>
+            <param name="iCode">クライアントのコードを入力するとクライアントのアクセサを生成できます</param>
+        </member>
+        <member name="M:KLINKWebAPI.Utilities.APIUtility.EndAPI``1(Microsoft.Extensions.Logging.ILogger{``0},System.Object)">
+            <summary>
+            共通の関数終了前処理（ログ出力）
+            </summary>
+            <param name="logger">ログクラスのインスタンス</param>
+            <param name="responseBody">レスポンスボディ</param>
+            <remarks>
+            <para>更新履歴</para>
+            </remarks>
+        </member>
+        <member name="M:KLINKWebAPI.Utilities.APIUtility.CreateBadResult``1(Microsoft.AspNetCore.Mvc.ControllerBase,Microsoft.Extensions.Logging.ILogger{``0},System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Exception)">
+            <summary>
+            APIにおいて、共通の異常終了レスポンスの作成処理,DBにログを残す
+            ※デフォルト値 550、 他HttpStatus
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="controller">呼出元のコントローラインスタンス</param>
+            <param name="logger">呼出元で生成されたロガーインスタンス</param>
+            <param name="httpStatus">Httpレスポンス用ステータスコード</param>
+            <param name="errorCode">Httpレスポンス用ステータスコード</param>
+            <param name="errorMessage">Httpレスポンス用ステータスメッセージ</param>
+            <param name="userID">T_LOG_API用</param>
+            <param name="prgID">T_LOG_API用</param>
+            <param name="logMessage">T_LOG_API用 Jsonは空なので任意のメッセージを入れる事ができます</param>
+            <param name="ex">例外オブジェクト</param>
+            <returns></returns>
+        </member>
+        <member name="M:KLINKWebAPI.Utilities.APIUtility.CreateResponse``1(Microsoft.AspNetCore.Mvc.ControllerBase,Microsoft.Extensions.Logging.ILogger{``0},System.Int32,System.String,System.String,System.Object)">
+            <summary>
+            APIにおいて、共通の終了レスポンスの作成処理
+            </summary>
+            <param name="controller">本関数をコールしたインスタンス</param>
+            <param name="logger">ログクラスのインスタンス</param>
+            <param name="httpStatus">Httpレスポンス用ステータスコード</param>
+            <param name="userID">T_LOG_API用</param>
+            <param name="prgID">T_LOG_API用</param>
+            <param name="responseBody">レスポンスボディ</param>
+            <returns>レスポンスオブジェクト</returns>
+            <remarks>
+            <para>更新履歴</para>
+            </remarks>
+        </member>
+        <member name="M:KLINKWebAPI.Utilities.APIUtility.CreateBadResponse``1(Microsoft.AspNetCore.Mvc.ControllerBase,Microsoft.Extensions.Logging.ILogger{``0},System.Object,System.String,System.String,System.Int32,System.String,System.Exception)">
+            <summary>
+            APIにおいて、共通の異常時終了レスポンスの作成処理、任意メッセージをログを残す
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="controller"></param>
+            <param name="logger"></param>
+            <param name="responseBody"></param>
+            <param name="userID">T_LOG_API用</param>
+            <param name="prgID">T_LOG_API用</param>
+            <param name="httpStatus">T_LOG_API用</param>
+            <param name="logMessage">T_LOG_API用</param>
+            <param name="ex">例外インスタンス</param>
+            <para>更新履歴</para>
+            <returns></returns>
+        </member>
+        <member name="T:KLINKWebAPI.Utilities.ModelJsonConverter">
+            <summary>
+            購入集処理の関数
+            </summary>
+        </member>
+        <member name="M:KLINKWebAPI.Utilities.ModelJsonConverter.SetToList(KLINK.Collaborations.Contracts.Kounyu.Models.KounyuParameter@,KLINKWebAPI.Models.KLINKWebAPI.Models.PostBuyingLinkRequestBase)">
+            <summary>
+            リスト型に代入
+            </summary>
+            <param name="param"></param>
+            <param name="body"></param>
+        </member>
+        <member name="T:LineWebAPI.Models.GetTestResponseBase">
+            <summary>
+            Lineレスポンス
+            </summary>
+        </member>
+        <member name="P:LineWebAPI.Models.GetTestResponseBase.errorCode">
+            <summary>
+            エラーコード
+            </summary>
+        </member>
+        <member name="P:LineWebAPI.Models.GetTestResponseBase.errorMessage">
+            <summary>
+            エラーメッセージ
+            </summary>
+        </member>
+        <member name="P:LineWebAPI.Models.GetTestResponseBase.message">
+            <summary> 
+            結果メッセージ 
+            </summary>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.Equals(LineWebAPI.Models.GetTestResponseBase)">
+            <summary>
+            Returns true if PostBuyingLinkRequestModel instances are equal
+            </summary>
+            <param name="other">Instance of PostBuyingLinkRequestModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+    </members>
+</doc>

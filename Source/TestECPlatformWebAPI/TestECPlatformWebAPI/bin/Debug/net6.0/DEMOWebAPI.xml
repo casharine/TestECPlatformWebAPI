@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DEMOWebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:DEMOWebAPI.Controllers.BuyingLinkController">
+            <summary>
+            連携API購入コントローラクラス
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Controllers.BuyingLinkController.#ctor(Microsoft.Extensions.Logging.ILogger{DEMOWebAPI.Controllers.BuyingLinkController})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="logger">ログオブジェクト</param>
+        </member>
+        <member name="M:DEMOWebAPI.Controllers.BuyingLinkController.PostBuyingLinkData(DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase)">
+            <summary>
+            連携購入用API
+            </summary>
+            <param name="body">荷受バーコード情報</param>
+            <response code="200">処理成功、業務エラーもここに含まれる</response>
+            <response code="400">必須パラメーターが足りないなどuserのリクエストに誤りがある。</response>
+            <remarks>
+            <para>更新履歴</para>
+            <para>2023/04 Y.ITO 新規作成</para>
+            </remarks>
+        </member>
+        <member name="T:DEMOWebAPI.Controllers.TestConnectionController">
+            <summary>
+            疎通確認用
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Controllers.TestConnectionController.#ctor(Microsoft.Extensions.Logging.ILogger{DEMOWebAPI.Controllers.TestConnectionController})">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="logger">ログオブジェクト</param>
+            <param name="appSettings">appsettings.json情報</param>
+        </member>
+        <member name="M:DEMOWebAPI.Controllers.TestConnectionController.GetTestConnectionController">
+            <summary>
+            疎通確認用Get（引数不要）
+            </summary>
+            <response code="200">処理成功、業務エラーもここに含まれる</response>
+            <response code="400">必須パラメーターが足りないなどのリクエストに誤りがある。</response>
+            <remarks>
+            <para>更新履歴</para>
+            <para>2023年1月17日 Y.Ito 新規作成</para>
+            </remarks>
+        </member>
+        <member name="T:DEMOWebAPI.Models.ErrorResult">
+            <summary>
+            汎用リザルトクラス。各レスポンスクラスのメンバで用いる。
+            </summary>
+        </member>
+        <member name="P:DEMOWebAPI.Models.ErrorResult.errorCode">
+            <summary>
+            エラーコード
+            </summary>
+            <value>OKの場合:0、エラー有り:0以外のコード</value>
+        </member>
+        <member name="P:DEMOWebAPI.Models.ErrorResult.errorMessage">
+            <summary>
+            エラーコードメッセージ
+            </summary>
+            <value>正常終了:"なし"、エラー有り:エラー内容</value>
+        </member>
+        <member name="M:DEMOWebAPI.Models.ErrorResult.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Models.ErrorResult.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.ErrorResult.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.ErrorResult.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.ErrorResult.Equals(DEMOWebAPI.Models.ErrorResult)">
+            <summary>
+            Returns true if ErrrorResult instances are equal
+            </summary>
+            <param name="other">Instance of ErrrorResult to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.ErrorResult.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase">
+            <summary>
+            INbodyのモデル 
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="P:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.USER_ID">
+            <summary>
+            ユーザID
+            </summary>
+        </member>
+        <member name="P:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.OROSI_CD_SHOZOKU">
+            <summary>
+            購入時使用した買参人のコード ※API化時追加
+            </summary>
+        </member>
+        <member name="P:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.OROSI_CD_SHOHIN">
+            <summary>
+            購入した商品コード ※※API化時変更：旧OROSI_CD
+            </summary>
+        </member>
+        <member name="P:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.OROSI_CD_SITE">
+            <summary>
+            購入したサイトコード※API化時追加
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.Equals(DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase)">
+            <summary>
+            Returns true if GetSeikInfoModelModel instances are equal
+            </summary>
+            <param name="other">Instance of GetSeikInfoModelModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.DEMOWebAPI.Models.PostBuyingLinkRequestBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:DEMOWebAPI.Models.PostBuyingLinkResponseBase">
+            <summary>
+            購入連携データ取得レスポンス
+            </summary>
+        </member>
+        <member name="P:DEMOWebAPI.Models.PostBuyingLinkResponseBase.ErrorCode">
+            <summary>
+            エラーコード
+            </summary>
+        </member>
+        <member name="P:DEMOWebAPI.Models.PostBuyingLinkResponseBase.ErrorMessage">
+            <summary>
+            メッセージ
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Models.PostBuyingLinkResponseBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:DEMOWebAPI.Models.PostBuyingLinkResponseBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.PostBuyingLinkResponseBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.PostBuyingLinkResponseBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.PostBuyingLinkResponseBase.Equals(DEMOWebAPI.Models.PostBuyingLinkResponseBase)">
+            <summary>
+            Returns true if PostBuyingLinkRequestModel instances are equal
+            </summary>
+            <param name="other">Instance of PostBuyingLinkRequestModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:DEMOWebAPI.Models.PostBuyingLinkResponseBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+        <member name="T:DEMOWebAPI.Program">
+            <summary>
+            エントリーポイント
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Program.Main(System.String[])">
+            <summary>
+            main関数
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:DEMOWebAPI.Program.BuildWebHost(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DEMOWebAPI.Startup">
+            <summary>
+            APIのスタートアップ
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Startup.#ctor(Microsoft.Extensions.Logging.ILoggerFactory,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="loggerFactory"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:DEMOWebAPI.Startup.Configuration">
+            <summary>
+            アクセサ
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:DEMOWebAPI.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="T:DEMOWebAPI.Utilities.APIUtility">
+            <summary>
+            WebAPI用ユーティリティクラス
+            </summary>
+        </member>
+        <member name="M:DEMOWebAPI.Utilities.APIUtility.StartUpAPI``1(Microsoft.Extensions.Logging.ILogger{``0},System.Object,System.String,System.String,System.String)">
+            <summary>
+            APIにおいて、共通の開始処理、DBにログを残す
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="iLogger"></param>
+            <param name="iBody"></param>
+            <param name="userID"></param>
+            <param name="prgID"></param>
+            <param name="iCode">クライアントのコードを入力するとクライアントのアクセサを生成できます</param>
+        </member>
+        <member name="M:DEMOWebAPI.Utilities.APIUtility.EndAPI``1(Microsoft.Extensions.Logging.ILogger{``0},System.Object)">
+            <summary>
+            共通の関数終了前処理（ログ出力）
+            </summary>
+            <param name="logger">ログクラスのインスタンス</param>
+            <param name="responseBody">レスポンスボディ</param>
+            <remarks>
+            <para>更新履歴</para>
+            </remarks>
+        </member>
+        <member name="M:DEMOWebAPI.Utilities.APIUtility.CreateBadResult``1(Microsoft.AspNetCore.Mvc.ControllerBase,Microsoft.Extensions.Logging.ILogger{``0},System.Int32,System.Int32,System.String,System.String,System.String,System.String,System.Exception)">
+            <summary>
+            APIにおいて、共通の異常終了レスポンスの作成処理,DBにログを残す
+            ※デフォルト値 550、 他HttpStatus
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="controller">呼出元のコントローラインスタンス</param>
+            <param name="logger">呼出元で生成されたロガーインスタンス</param>
+            <param name="httpStatus">Httpレスポンス用ステータスコード</param>
+            <param name="errorCode">Httpレスポンス用ステータスコード</param>
+            <param name="errorMessage">Httpレスポンス用ステータスメッセージ</param>
+            <param name="userID">T_LOG_API用</param>
+            <param name="prgID">T_LOG_API用</param>
+            <param name="logMessage">T_LOG_API用 Jsonは空なので任意のメッセージを入れる事ができます</param>
+            <param name="ex">例外オブジェクト</param>
+            <returns></returns>
+        </member>
+        <member name="M:DEMOWebAPI.Utilities.APIUtility.CreateResponse``1(Microsoft.AspNetCore.Mvc.ControllerBase,Microsoft.Extensions.Logging.ILogger{``0},System.Int32,System.String,System.String,System.Object)">
+            <summary>
+            APIにおいて、共通の終了レスポンスの作成処理
+            </summary>
+            <param name="controller">本関数をコールしたインスタンス</param>
+            <param name="logger">ログクラスのインスタンス</param>
+            <param name="httpStatus">Httpレスポンス用ステータスコード</param>
+            <param name="userID">T_LOG_API用</param>
+            <param name="prgID">T_LOG_API用</param>
+            <param name="responseBody">レスポンスボディ</param>
+            <returns>レスポンスオブジェクト</returns>
+            <remarks>
+            <para>更新履歴</para>
+            </remarks>
+        </member>
+        <member name="M:DEMOWebAPI.Utilities.APIUtility.CreateBadResponse``1(Microsoft.AspNetCore.Mvc.ControllerBase,Microsoft.Extensions.Logging.ILogger{``0},System.Object,System.String,System.String,System.Int32,System.String,System.Exception)">
+            <summary>
+            APIにおいて、共通の異常時終了レスポンスの作成処理、任意メッセージをログを残す
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="controller"></param>
+            <param name="logger"></param>
+            <param name="responseBody"></param>
+            <param name="userID">T_LOG_API用</param>
+            <param name="prgID">T_LOG_API用</param>
+            <param name="httpStatus">T_LOG_API用</param>
+            <param name="logMessage">T_LOG_API用</param>
+            <param name="ex">例外インスタンス</param>
+            <para>更新履歴</para>
+            <returns></returns>
+        </member>
+        <member name="T:LineWebAPI.Models.GetTestResponseBase">
+            <summary>
+            Lineレスポンス
+            </summary>
+        </member>
+        <member name="P:LineWebAPI.Models.GetTestResponseBase.errorCode">
+            <summary>
+            エラーコード
+            </summary>
+        </member>
+        <member name="P:LineWebAPI.Models.GetTestResponseBase.errorMessage">
+            <summary>
+            エラーメッセージ
+            </summary>
+        </member>
+        <member name="P:LineWebAPI.Models.GetTestResponseBase.message">
+            <summary> 
+            結果メッセージ 
+            </summary>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+            <remarks></remarks>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.ToString">
+            <summary>
+            Returns the string presentation of the object
+            </summary>
+            <returns>String presentation of the object</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.ToJson">
+            <summary>
+            Returns the JSON string presentation of the object
+            </summary>
+            <returns>JSON string presentation of the object</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.Equals(System.Object)">
+            <summary>
+            Returns true if objects are equal
+            </summary>
+            <param name="obj">Object to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.Equals(LineWebAPI.Models.GetTestResponseBase)">
+            <summary>
+            Returns true if PostBuyingLinkRequestModel instances are equal
+            </summary>
+            <param name="other">Instance of PostBuyingLinkRequestModel to be compared</param>
+            <returns>Boolean</returns>
+        </member>
+        <member name="M:LineWebAPI.Models.GetTestResponseBase.GetHashCode">
+            <summary>
+            Gets the hash code
+            </summary>
+            <returns>Hash code</returns>
+        </member>
+    </members>
+</doc>
