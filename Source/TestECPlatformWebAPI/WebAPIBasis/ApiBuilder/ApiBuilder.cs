@@ -36,6 +36,6 @@ namespace WebAPIBasis.ApiBuilder
 
         /// <summary> ビルド部（サーバーまたはクライアントのAccesorオブジェクト生成） *引数不要 </summary>
         public static IAccesors Build<TCode>(this ApiBuilder<TCode> builder) where TCode : IOpt =>
-            builder.Code == "" ? new ServerAccesors() : new ClientAccesors(builder.Code);
+            builder.Code == "" ? new ServerAccesors("") : new ClientAccesors(builder.Code);
     }
 }

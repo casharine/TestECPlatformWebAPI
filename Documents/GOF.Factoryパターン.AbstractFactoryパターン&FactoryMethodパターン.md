@@ -1,18 +1,25 @@
-# ［GOF］Factoryパターン - Factoryメソッド -
+# ［GOF］Factoryパターン - AbstractFactoryパターン&FactoryMethodパターン -
 
 ## はじめに
-本プロジェクトでは、少し複雑になりますがFactoryパターンを入れ子構造に展開し、クライアントサイトが自社サイトの購入処理を行うか他社サイトの購入処理を行うかによって適切なオブジェクト群を一括生成できるようにプログラムしました。
 
-- Factoryパターン
-オブジェクト生成を抽象化する方法全般を指します。オブジェクトの生成をカプセル化するデザインパターンの一種で、具体的な生成方法をクライアントコードから分離する事ができます。
-(internalはJavaでいうpackage-privateと同義です)
+### AbstractFactoryパターン について
+GOFの中でも特に初めて設計と実装に挑戦した時は難しいと感じました。少し長めになりますが、非常に便利です。実際あらゆる有名なフレームワークを構築する上で、複雑な生成部のロジックをクライアント側から分離するためによく利用されています。
 
-- FactoryMethodパターン
-FactoryメソッドはFactoryパターンの一部を指し、特徴として特にメソッドレベルでオブジェクトの生成を抽象化します。具体的には、オブジェクトの生成方法をサブクラスで定義し、基底クラスでは抽象化することで、生成方法の多様性を持たせます。いわゆるポリモーフィズムです。
+このパターンは、関連するオブジェクト群を一貫性を持って生成する事ができます。今回で言うとServerAccesors(APIサーバーを利用する上で共通の各種データやオブジェクトへのアクセサー群) と ClientAccesors（クライアント側ECサイトの毎に異なる各種データやオブジェクトへのアクセサー群）です。
 
-- その他のFactoryパターン
-本ソリューションでは、Factoryメソッド以外にもSimpleFactoryパターンも利用していますが、他にもFactoryパターンにはオブジェクトの複製に特化したPrototypeパターンや一意性を担保することでグローバルアクセスポイントとするSingletonパターン等があります。
-Prototypeについては実装中ParchaseResultを適用したいと思います。
+既存のクライアントコードに影響を与えずに拡張可能できたりテストが容易だったりと良い事ずくめですが、必要以上に複雑になるので小規模プロジェクトには不向きだったり、抽象クラスの制限上具象クラスの柔軟なカスタマイズに支障がでる場合があるので注意が必要です。
+
+#### Abstract Factoryパターンの要素
+以下の要素が挙げられます。必ずしもAbstractクラスを使用しなければならないわけではなくInterfaceであっても問題ないので今回はC#のため抽象側はInterfaceで統一しています。
+
+- 抽象ファクトリ (Abstract Factory): 関連する一連のオブジェクトを生成するためのインターフェースを定義します。
+- 具体ファクトリ (Concrete Factory): 抽象ファクトリインターフェースを実装し、具体的なオブジェクトを生成します。
+- 抽象プロダクト (Abstract Product): 各製品のためのインターフェースを宣言します。
+- 具体プロダクト (Concrete Product): 抽象プロダクトのインターフェースを実装し、具体的な製品を生成します。
+
+### FactoryMethodパターンについて
+FactoryメソッドはFactoryパターンの一部を指し、特徴として特にメソッドレベルでオブジェクトの生成を抽象化します。具体的には、オブジェクトの生成方法をサブクラスで定義し、基底クラスでは抽象化することで、生成方法の多様性(ポリモーフィズム)を持たせる事ができます。今回で言うとcreateIAccesorsメソッドが本パターンを指します。
+
 
 ## クラス図
 ```
@@ -68,150 +75,152 @@ Prototypeについては実装中ParchaseResultを適用したいと思います
 | + LoggerAPI(string siteCode) |      | + LoggerClient(string siteCode) |
 --------------------------------      -----------------------------------
 ```
-
-
 ## 実装例
-### Builderパターン呼び出し部
-
-    public class PurchaseLinkController : ControllerBase{
- public IActionResult PostPurchaseLinkData(PostPurchaseLinkRequestBase body){
-    中略
-                IPurchase Purchase = new SelfPurchaseFactory().createPurchase(param);
-                PurchaseResult resPurchaseLink = Purchase.purchase();
-    中略}
-    }
-
-## AbstractFactory
-### IAccesorsFactory インターフェース
-IAccesorsFactory インターフェースが Create メソッドを定義しています。これは具象ファクトリークラスによって実装され、具体的な IAccesors のインスタンスを生成します。
-ServerAccesorsFactory と ClientAccesorsFactory クラスが IAccesorsFactory インターフェースを実装し、それぞれの Create メソッドが対応する具体的な IAccesors インスタンスを生成します。
-IAccesors インターフェースが、ServerAccesors と ClientAccesors クラスで実装されており、各クラスが異なる方法でアクセスオブジェクトを提供します。
-LoggerAPI と LoggerClient クラスが、それぞれのアクセサクラスで使用され、サイトコードに基づいてインスタンス化されます。
+Abstract Factory パターンは関連するオブジェクトファミリーを生成するために使用され、Factory Method パターンは個々のオブジェクトを生成する方法を制御するために使用されています。
 
 
-IAccesorsFactory インターフェース:
-
-IAccesorsFactory インターフェースの Create メソッドが Factory Method パターンの実装です。このメソッドは、具体的な製品のインスタンス化の詳細をサブクラスに委譲します。
-具象ファクトリークラス (ServerAccesorsFactory と ClientAccesorsFactory):
-
-ServerAccesorsFactory と ClientAccesorsFactory クラスの Create メソッドは、それぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用されています。これにより、具体的な製品のインスタンスを生成する責任がサブクラスに移譲され、クライアントコードは具体的な製品の詳細から分離されます。
-説明のポイント：
-Abstract Factory パターンは、関連する一連の製品を生成するためのインターフェースを提供し、具体的なファクトリーがその実装を担当します。
-Factory Method パターンは、具体的なファクトリーのサブクラスが生成する具体的な製品のインスタンス化を処理する方法を定義します。
-このように、Abstract Factory パターンは関連する製品ファミリーを生成するために使用され、Factory Method パターンは個々の製品を生成する方法を制御するために使用されています。
-
+### IAccesorsFactory インターフェース：抽象ファクトリクラス 
+抽象ファクトリクラスです。続くxxxAccesorsFactoryにより実装されます。
 ```
-public interface IAccesorsFactory
+public interface IAccessorsFactory
 {
-    IAccesors Create(string siteCode);
+    IAccessors CreateAccessors(string siteCode);
 }
-
-// Concrete Factory for Server
-public class ServerAccesorsFactory : IAccesorsFactory
+```
+### xxxAccesorsFactory インターフェース: 具象ファクトリクラス
+次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、具体的なオブジェクトの詳細から分離す事ができます。
+#### ServerAccessorsFactory
+```
+public class ServerAccessorsFactory : IAccessorsFactory
 {
-    public IAccesors Create(string siteCode)
+    public IAccessors CreateAccessors(string siteCode)
     {
-        return new ServerAccesors(siteCode);
+        return new ServerAccessors(siteCode);
     }
 }
-
-// Concrete Factory for Client
-public class ClientAccesorsFactory : IAccesorsFactory
+```
+#### ClientAccessorsFactory
+```
+public class ClientAccessorsFactory : IAccessorsFactory
 {
-    public IAccesors Create(string siteCode)
+    public IAccessors CreateAccessors(string siteCode)
     {
-        return new ClientAccesors(siteCode);
+        return new ClientAccessors(siteCode);
     }
 }
 ```
 
-### IAccesors インターフェース
+### IAccesors インターフェース：抽象プロダクトクラス
+いよいよプロダクトの生成ですが、ここでもまずプロダクトの抽象クラスを呼び出し、具体的なオブジェクト群の生成を分離します。
 ```
 public interface IAccesors
 {
-    string GetCode();
-    string GetConnectionString();
-    IConfigurationRoot GetAppsettings();
-    OracleConnection GetConnection();
-    LoggerAPI GetLoggerAPI();
-    LoggerClient GetLoggerClient();
-    object GetLockObject();
+    public string GetCode();
+    public string GetConnectionString();
+    public IConfigurationRoot GetAppsettings();
+    public OracleConnection GetConnection();
+    public LoggerAPI GetLoggerAPI();
+    public LoggerClient GetLoggerClient();
+    public object GetLockObject();
 }
 ```
 
-### Concrete Products (ServerAccesors と ClientAccesors)
-
+### xxxAccesors ：具象製品クラス
+最後に具象クラスを抽象クラスの制約に違反しない範囲で自由に実装していく事ができます。今回の例ではAPIサーバーのアクセサを使用して購入処理を行う事はないので購入時に使用するLockobjectは生成されませんが、SiteAccesor側ではロックオブジェクトを生成している等違いを持たせる事ができています。
 #### ServerAccesors
 ```
 public class ServerAccesors : IAccesors
 {
-    private string _site;
-    private string _connectionString;
-    private IConfigurationRoot _configurationRoot;
-    private OracleConnection _oracleConnection;
-    private LoggerAPI _loggerAPI;
+#region Init(Field, Property, Constructor)
+private string _site;
+private string _connectionString;
+private IConfigurationRoot _configurationRoot;
+private OracleConnection _oracleConnection;
+private LoggerAPI _loggerAPI;
 
-    public ServerAccesors(string siteCode)
-    {
-        _site = siteCode;
-        var fnc = new ConfigUtils();
-        _configurationRoot = fnc.BuildConfigurationRoot();
-        _connectionString = fnc.GetConnectionString("");
-        _oracleConnection = new DBUtils().CreateOracleConnection(_connectionString);
-        _loggerAPI = new LoggerAPI("");
-    }
+public ServerAccesors(string siteCode)
+{
+    _site = siteCode;
+    var fnc = new ConfigUtils();
+    _configurationRoot = fnc.BuildConfigurationRoot();
+    _connectionString = fnc.GetConnectionString("");
+    _oracleConnection = new DBUtils().CreateOracleConnection(_connectionString);
+    _loggerAPI = new LoggerAPI("");
+}
+#endregion Init(Field, Property, Constructor)
 
-    public string GetCode() { return _site; }
-    public string GetConnectionString() { return _connectionString; }
-    public IConfigurationRoot GetAppsettings() { return _configurationRoot; }
-    public OracleConnection GetConnection() { return _oracleConnection; }
-    public LoggerAPI GetLoggerAPI() { return _loggerAPI; }
-    public LoggerClient GetLoggerClient() { return null; } 
-    public object GetLockObject() { return null; } 
+#region Getterメソッド群
+public string getCode() { return _site; }
+public string getConnectionString() { return _connectionString; }
+public IConfigurationRoot getAppsettings() { return _configurationRoot; }
+public OracleConnection getConnection() { return _oracleConnection; }
+public LoggerAPI getLoggerAPI() { return _loggerAPI; }
+public LoggerClient getLoggerClient() { return null; }
+public object getLockObject() { return null; }
+
+#endregion Getterメソッド群
 }
 ```
 #### ClientAccesors
 ```
 public class ClientAccesors : IAccesors
 {
-    private string _site;
-    private string _connectionString;
-    private IConfigurationRoot _configurationRoot;
-    private OracleConnection _oracleConnection;
-    private LoggerAPI _loggerAPI;
-    private LoggerClient _loggerClient;
-    private object _lockObject;
+#region Init(Field, Property, Constructor)
+private string _SITE { get; } = "";
+private string _connectionStrings { get; } = "";
+private IConfigurationRoot _configurationRoot { get; } = null!;
+private OracleConnection _oracleConnection { get; } = null!;
+private LoggerAPI _loggerAPI { get; } = null!;
+private LoggerClient _loggerClient { get; } = null!;
+private static object _myLockObject { get; set; } = new object();
+private static object _LockObjectFUGA { get; } = new object();
+private static object _LockObjectPIYO { get; } = new object();
+private static object _LockObjectHOGE { get; } = new object();
 
-    public ClientAccesors(string siteCode)
-    {
-        _site = siteCode;
-        var fnc = new ConfigUtils();
-        _configurationRoot = fnc.BuildConfigurationRoot();
-        _connectionString = fnc.GetConnectionString(siteCode);
-        _oracleConnection = new DBUtils().CreateOracleConnection(_connectionString);
-        _loggerAPI = new LoggerAPI("");
-        _loggerClient = new LoggerClient(siteCode);
-        _lockObject = DetermineLockObject();
-    }
+public ClientAccesors(string iSITE)
+{
+    var fnc = new ConfigUtils();
+    _SITE = iSITE;
+    _configurationRoot = fnc.BuildConfigurationRoot();
+    _connectionStrings = fnc.GetConnectionString(iSITE)!;
+    _oracleConnection = new DBUtils().CreateOracleConnection(_connectionStrings);
+    _loggerAPI = new LoggerAPI("");
+    _loggerClient = new LoggerClient(iSITE);
+}
+#endregion Init(field, property, constructor)
 
-    private object DetermineLockObject()
+#region Getterメソッド群
+public string getCode() { return _SITE; }
+public string getConnectionString() { return _connectionStrings; }
+public IConfigurationRoot getAppsettings() { return _configurationRoot; }
+public OracleConnection getConnection() { return _oracleConnection; }
+public LoggerAPI getLoggerAPI() { return _loggerAPI; }
+public LoggerClient getLoggerClient() { return _loggerClient; }
+#endregion Getterメソッド群
+
+#region その他のメソッド群
+public object getLockObject()
+{
+    object wLockObject;
+
+    try
     {
-        switch (_site)
+        var target = this.getCode() switch
         {
-            case "2101": return new object(); // _LockObjectHOGE
-            case "3501": return new object(); // _LockObjectFUGA
-            case "3502": return new object(); // _LockObjectPIYO
-            default: throw new ArgumentOutOfRangeException();
-        }
+            "1001" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1001"), 
+            "1002" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1002"),
+            "1003" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1003"),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
-
-    public string GetCode() { return _site; }
-    public string GetConnectionString() { return _connectionString; }
-    public IConfigurationRoot GetAppsettings() { return _configurationRoot; }
-    public OracleConnection GetConnection() { return _oracleConnection; }
-    public LoggerAPI GetLoggerAPI() { return _loggerAPI; }
-    public LoggerClient GetLoggerClient() { return _loggerClient; }
-    public object GetLockObject() { return _lockObject; }
+    catch (Exception ex)
+    {
+        this.getLoggerClient().WriteLog("createSelectedPurchase", $"コード{this.getCode()}の購入クラス生成に失敗しました");
+        throw;
+    }
+    return wLockObject;
+}
+#endregion その他のメソッド群
 }
 ```
 

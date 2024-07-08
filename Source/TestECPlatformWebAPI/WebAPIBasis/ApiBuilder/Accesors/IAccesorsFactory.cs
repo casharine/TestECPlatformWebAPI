@@ -24,12 +24,12 @@ namespace WebAPIBasis.Accesors
     /// </readme>
     public interface IAccesorsFactory
     {
-        IAccesors Create(string siteCode);
+        IAccesors CreateAccessors(string siteCode);
     }
 
     public class ServerAccesorsFactory : IAccesorsFactory
     {
-        public IAccesors Create(string siteCode)
+        public IAccesors CreateAccessors(string siteCode)
         {
             return new ServerAccesors(siteCode);
         }
@@ -37,7 +37,7 @@ namespace WebAPIBasis.Accesors
 
     public class ClientAccesorsFactory : IAccesorsFactory
     {
-        public IAccesors Create(string siteCode)
+        public IAccesors CreateAccessors(string siteCode)
         {
             return new ClientAccesors(siteCode);
         }

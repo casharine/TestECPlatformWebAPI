@@ -19,7 +19,7 @@ namespace WebAPIBasis.Accesors
     /// </summary>
     /// 
     /// <readme>
-    /// 1.ApiBuilderから基本的に生成してください ※例：ApiBuilder.Create().Build(); または ApiBuilder.Create().Code().Build();
+    /// 1.ApiBuilderから基本的に生成してください ※例：ApiBuilder.CreateAccessors().Build(); または ApiBuilder.CreateAccessors().Code().Build();
     /// </readme>
     /// <author> Y.Ito  </author>
     public class ServerAccesors : IAccesors

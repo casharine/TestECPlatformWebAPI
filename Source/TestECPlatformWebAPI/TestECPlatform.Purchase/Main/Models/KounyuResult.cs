@@ -4,14 +4,23 @@
     ///  花き仲購入処理結果クラス
     ///  </summary>
     ///  <remarks></remarks>
-    public class PurchaseResult
+    public class PurchaseResult : ICloneable
     {
-        /// <summary>エラーコード</summary>
         public int ErrorCode { get; set; } = 0;
-        /// <summary>メッセージ</summary>
         public string ErrorMessage { get; set; } = string.Empty;
-        /// <summary>残数</summary>
         public long CountLockFailed { get; set; } = 0;
 
+
+        // クローンメソッドの実装
+        public object Clone()
+        {
+            return new PurchaseResult
+            {
+                ErrorCode = this.ErrorCode,
+                ErrorMessage = this.ErrorMessage,
+                CountLockFailed = this.CountLockFailed
+            };
+        }
     }
+
 }

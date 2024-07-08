@@ -19,7 +19,7 @@ namespace WebAPIBasis.Accesors
     /// </summary>
     /// 
     /// <readme>
-    /// 1.基本的にApiBuilderから生成してください ※例： ApiBuilder.Create().Code(string iCode).Build();
+    /// 1.基本的にApiBuilderから生成してください ※例： ApiBuilder.CreateAccessors().Code(string iCode).Build();
     /// </readme>
     /// <author> Y.Ito  </author>
     public class ClientAccesors : IAccesors
@@ -70,9 +70,9 @@ namespace WebAPIBasis.Accesors
             {
                 var target = this.getCode() switch
                 {
-                    "2101" => wLockObject = _LockObjectHOGE,
-                    "3501" => wLockObject = _LockObjectFUGA,
-                    "3502" => wLockObject = _LockObjectPIYO,
+                    "1001" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1001"),
+                    "1002" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1002"),
+                    "1003" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1003"),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }

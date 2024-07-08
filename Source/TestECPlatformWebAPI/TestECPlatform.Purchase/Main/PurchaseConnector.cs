@@ -34,19 +34,14 @@ namespace TestECPlatform.Purchase.Main
             // 購入処理実行
             var wPurchaseResult = Purchase.purchase();
 
-            // 外部連携結果を更新する
-            rPurchaseResult.ErrorCode = wPurchaseResult.ErrorCode;
-            rPurchaseResult.CountLockFailed = wPurchaseResult.CountLockFailed;
+            //プロトタイプパターンで連携先のエラー情報に更新
+            rPurchaseResult = (PurchaseResult)wPurchaseResult.Clone();
 
             // エラー処理
             if (wPurchaseResult.ErrorCode != 0)
             {
                 rPurchaseResult.ErrorMessage = CommonUtils.DisplayEnumByInt(new PurchaseRes(), rPurchaseResult.ErrorCode, "外部連携エラー ");
                 rPurchaseResult.ErrorCode = -9000;
-            }
-            else
-            {
-                rPurchaseResult.ErrorMessage = wPurchaseResult.ErrorMessage;
             }
         }
     }
