@@ -25,7 +25,7 @@ namespace WebAPIBasis.Accesors
     public class ClientAccesors : IAccesors
     {
         #region Init(Field, Property, Constructor)
-        private string _SITE { get; } = "";
+        private string _SITE_CD { get; } = "";
         private string _connectionStrings { get; } = "";
         private IConfigurationRoot _configurationRoot { get; } = null!;
         private OracleConnection _oracleConnection { get; } = null!;
@@ -36,20 +36,20 @@ namespace WebAPIBasis.Accesors
         private static object _LockObjectPIYO { get; } = new object();
         private static object _LockObjectHOGE { get; } = new object();
 
-        public ClientAccesors(string iSITE)
+        public ClientAccesors(string iSITE_CD)
         {
             var fnc = new ConfigUtils();
-            _SITE = iSITE;
+            _SITE_CD = iSITE_CD;
             _configurationRoot = fnc.BuildConfigurationRoot();
-            _connectionStrings = fnc.GetConnectionString(iSITE)!;
+            _connectionStrings = fnc.GetConnectionString(iSITE_CD)!;
             _oracleConnection = new DBUtils().CreateOracleConnection(_connectionStrings);
             _loggerAPI = new LoggerAPI("");
-            _loggerClient = new LoggerClient(iSITE);
+            _loggerClient = new LoggerClient(iSITE_CD);
         }
         #endregion Init(field, property, constructor)
 
         #region Getterメソッド群
-        public string getCode() { return _SITE; }
+        public string getCode() { return _SITE_CD; }
         public string getConnectionString() { return _connectionStrings; }
         public IConfigurationRoot getAppsettings() { return _configurationRoot; }
         public OracleConnection getConnection() { return _oracleConnection; }
@@ -70,9 +70,9 @@ namespace WebAPIBasis.Accesors
             {
                 var target = this.getCode() switch
                 {
-                    "1001" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1001"),
-                    "1002" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1002"),
-                    "1003" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1003"),
+                    "1001" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject(this.getCode()),
+                    "1002" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject(this.getCode()),
+                    "1003" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject(this.getCode()),
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }

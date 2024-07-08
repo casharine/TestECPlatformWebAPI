@@ -3,11 +3,11 @@
 ## はじめに
 
 ### AbstractFactoryパターン について
-GOFの中でも特に初めて設計と実装に挑戦した時は難しいと感じました。少し長めになりますが、非常に便利です。実際あらゆる有名なフレームワークを構築する上で、複雑な生成部のロジックをクライアント側から分離するためによく利用されています。
+GOFの中でも特に初めて設計と実装に挑戦した時は難しいと感じました。少し長めになりますが、非常に便利です。実際あらゆる有名なフレームワークを構築する上で、複雑な生成部のロジックをクライアント（呼出し元）側から分離するためによく利用されています。
 
 このパターンは、関連するオブジェクト群を一貫性を持って生成する事ができます。今回で言うとServerAccesors(APIサーバーを利用する上で共通の各種データやオブジェクトへのアクセサー群) と ClientAccesors（クライアント側ECサイトの毎に異なる各種データやオブジェクトへのアクセサー群）です。
 
-既存のクライアントコードに影響を与えずに拡張可能できたりテストが容易だったりと良い事ずくめですが、必要以上に複雑になるので小規模プロジェクトには不向きだったり、抽象クラスの制限上具象クラスの柔軟なカスタマイズに支障がでる場合があるので注意が必要です。
+既存のクライアントコード(呼出元)に影響を与えずに拡張可能できたりテストが容易だったりと良い事ずくめですが、必要以上に複雑になるので小規模プロジェクトには不向きだったり、抽象クラスの制限上具象クラスの柔軟なカスタマイズに支障がでる場合があるので注意が必要です。
 
 #### Abstract Factoryパターンの要素
 以下の要素が挙げられます。必ずしもAbstractクラスを使用しなければならないわけではなくInterfaceであっても問題ないので今回はC#のため抽象側はInterfaceで統一しています。
@@ -88,7 +88,7 @@ public interface IAccessorsFactory
 }
 ```
 ### xxxAccesorsFactory インターフェース: 具象ファクトリクラス
-次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、具体的なオブジェクトの詳細から分離す事ができます。
+次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、呼出し元を具体的なオブジェクトの詳細から分離す事ができます。
 #### ServerAccessorsFactory
 ```
 public class ServerAccessorsFactory : IAccessorsFactory
@@ -207,9 +207,9 @@ public object getLockObject()
     {
         var target = this.getCode() switch
         {
-            "1001" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1001"), 
-            "1002" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1002"),
-            "1003" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject("1003"),
+            "1001" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject(this.getCode()),
+            "1002" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject(this.getCode()),
+            "1003" => wLockObject = LockObjectsSingleton.GetInstance().GetLockObject(this.getCode()),
             _ => throw new ArgumentOutOfRangeException()
         };
     }
