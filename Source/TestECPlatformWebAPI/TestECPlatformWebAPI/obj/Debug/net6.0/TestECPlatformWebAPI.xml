@@ -114,17 +114,17 @@
             ユーザID
             </summary>
         </member>
-        <member name="P:TestECPlatformWebAPI.Models.TestECPlatformWebAPI.Models.PostPurchaseLinkRequestBase.OROSI_CD_SHOZOKU">
+        <member name="P:TestECPlatformWebAPI.Models.TestECPlatformWebAPI.Models.PostPurchaseLinkRequestBase.SHOZOKU_CD">
             <summary>
             購入時使用した買参人のコード ※API化時追加
             </summary>
         </member>
-        <member name="P:TestECPlatformWebAPI.Models.TestECPlatformWebAPI.Models.PostPurchaseLinkRequestBase.OROSI_CD_SHOHIN">
+        <member name="P:TestECPlatformWebAPI.Models.TestECPlatformWebAPI.Models.PostPurchaseLinkRequestBase.SHOHIN_CD">
             <summary>
             購入した商品コード ※※API化時変更：旧OROSI_CD
             </summary>
         </member>
-        <member name="P:TestECPlatformWebAPI.Models.TestECPlatformWebAPI.Models.PostPurchaseLinkRequestBase.OROSI_CD_SITE">
+        <member name="P:TestECPlatformWebAPI.Models.TestECPlatformWebAPI.Models.PostPurchaseLinkRequestBase.SITE_CD">
             <summary>
             購入したサイトコード※API化時追加
             </summary>

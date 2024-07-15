@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using System.Net;
 
 namespace TestECPlatformWebAPI
 {
@@ -49,22 +50,11 @@ namespace TestECPlatformWebAPI
                                   builder =>
                                   {
                                       builder.WithOrigins("http://localhost",
-                                                          "https://localhost",
-                                                          "http://localhost:44300",
-                                                          "https://localhost:44300",
-                                                          "http://localhost:44362",
-                                                          "https://localhost:44362",
-                                                          "http://192.168.10.71",
-                                                          "https://192.168.10.71",
-                                                          "http://192.168.10.71:81",
-                                                          "https://192.168.10.71:81",
-                                                          "http://3.143.248.176:44362",
-                                                          "http://3.143.248.176:44300",
-                                                          "https://3.141.165.142:44362",
-                                                          "https://3.141.165.142:44300")
-                                             .AllowCredentials()
-                                             .AllowAnyHeader()
-                                             .AllowAnyMethod();
+                                                          "https://localhost") // 指定したオリジン以外のリクエストは、CORSポリシーによって拒否
+                                             .AllowCredentials() // 許可：ocalhost、ローカルIP、パブリックIPアドレスに対するHTTPおよびHTTPSの接続を許可
+                                             .AllowAnyHeader()// 許可：Cookie、Authorizationヘッダーなど
+                                             .AllowAnyMethod(); // 許可：すべてのヘッダーとHTTPメソッド許可
+
                                   });
             });
 
@@ -75,6 +65,7 @@ namespace TestECPlatformWebAPI
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
 
+            // [Authorize]を有効化する
             var key = System.Text.Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
             {
@@ -98,7 +89,7 @@ namespace TestECPlatformWebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TestECPlatform.Server", Version = "v1" });
 
-                // Set the comments path for the Swagger JSON and UI.
+                // Swaggerを設定し、XMLコメントを使用してAPIドキュメントを自動生成する
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);

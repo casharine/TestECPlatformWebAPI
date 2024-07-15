@@ -23,12 +23,16 @@ namespace WebAPIBasis.Utilities
         /// <typeparam name="T"></typeparam>
         /// <param name="enumKey"></param>
         /// <returns></returns>
-        public static string DisplayEnum<T>(T enumKey) where T : IComparable
+        public static string DisplayEnum<T>(T enumKey) where T : Enum
         {
-            string internalFormat = enumKey.ToString()!;
-            var dispAttribute = enumKey.GetType().GetField(internalFormat!)?.GetCustomAttribute<DisplayAttribute>()!;
+            if (enumKey == null) throw new ArgumentNullException(nameof(enumKey));
 
-            return dispAttribute?.Name ?? internalFormat!;
+            string internalFormat = enumKey.ToString();
+            if (string.IsNullOrEmpty(internalFormat)) throw new ArgumentException("Invalid enum key");
+
+            var dispAttribute = enumKey.GetType().GetField(internalFormat)?.GetCustomAttribute<DisplayAttribute>();
+
+            return dispAttribute?.Name ?? internalFormat;
         }
 
         /// <summary>
@@ -40,7 +44,7 @@ namespace WebAPIBasis.Utilities
         /// <typeparam name="T"></typeparam>
         /// <param name="enumType"></param>
         /// <returns></returns>
-        public static string DisplayEnumByInt<T>(T enumType, int val, string outsideMsg = "") where T : IComparable
+        public static string DisplayEnumByInt<T>(T enumType, int val, string outsideMsg = "") where T : Enum
         {
             var key = (T)Enum.ToObject(typeof(T), val);
             var msg = DisplayEnum(key);

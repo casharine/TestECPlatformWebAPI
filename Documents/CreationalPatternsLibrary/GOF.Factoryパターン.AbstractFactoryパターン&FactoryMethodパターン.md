@@ -3,7 +3,7 @@
 ## はじめに
 
 ### AbstractFactoryパターン について
-GOFの中でも特に初めて設計と実装に挑戦した時は難しいと感じました。少し長めになりますが、非常に便利です。実際あらゆる有名なフレームワークを構築する上で、複雑な生成部のロジックをクライアント（呼出し元）側から分離するためによく利用されています。
+GOFの中でも特に初めて設計と実装に挑戦した時は難しいと感じました。.NETのフレームワークにも複雑な生成部のロジック層をクライアント（呼出し元）側から分離するためによく利用されているのを見かけます。（FormのUIコントロールなど）
 
 このパターンは、関連するオブジェクト群を一貫性を持って生成する事ができます。今回で言うとServerAccesors(APIサーバーを利用する上で共通の各種データやオブジェクトへのアクセサー群) と ClientAccesors（クライアント側ECサイトの毎に異なる各種データやオブジェクトへのアクセサー群）です。
 
@@ -18,7 +18,7 @@ GOFの中でも特に初めて設計と実装に挑戦した時は難しいと�
 - 具体プロダクト (Concrete Product): 抽象プロダクトのインターフェースを実装し、具体的な製品を生成します。
 
 ### FactoryMethodパターンについて
-FactoryメソッドはFactoryパターンの一部を指し、特徴として特にメソッドレベルでオブジェクトの生成を抽象化します。具体的には、オブジェクトの生成方法をサブクラスで定義し、基底クラスでは抽象化することで、生成方法の多様性(ポリモーフィズム)を持たせる事ができます。今回で言うとcreateIAccesorsメソッドが本パターンを指します。
+FactoryメソッドはFactoryパターンの一部を指し、特徴として特にメソッドレベルでオブジェクトの生成を抽象化する事を指します。具体的には、オブジェクトの生成方法をサブクラスで定義し、基底クラスでは抽象化することで、生成方法の多様性(ポリモーフィズム)を持たせる事ができます。今回で言うとcreateIAccesorsメソッドが本パターンを指します。
 
 
 ## クラス図
@@ -59,7 +59,7 @@ FactoryメソッドはFactoryパターンの一部を指し、特徴として特
 -------------------------------------------------   -------------------------------------------------
 |              ServerAccesors                   |   |              ClientAccesors                   |
 -------------------------------------------------   -------------------------------------------------
-| - _site: string                               |   | - _site: string                               |
+| - _SITE_CD: string                               |   | - _SITE_CD: string                               |
 | - _connectionString: string                   |   | - _connectionString: string                   |
 | - _configurationRoot: IConfigurationRoot      |   | - _configurationRoot: IConfigurationRoot      |
 | - _oracleConnection: OracleConnection         |   | - _oracleConnection: OracleConnection         |
@@ -80,41 +80,45 @@ Abstract Factory パターンは関連するオブジェクトファミリーを
 
 
 ### IAccesorsFactory インターフェース：抽象ファクトリクラス 
-抽象ファクトリクラスです。続くxxxAccesorsFactoryにより実装されます。
+まずは、抽象ファクトリクラスです。続くxxxAccesorsFactoryにより実装されます。
 ```
 public interface IAccessorsFactory
 {
+    // 抽象ファクトリ（インターフェイス）なので側のみ
     IAccessors CreateAccessors(string siteCode);
 }
 ```
 ### xxxAccesorsFactory インターフェース: 具象ファクトリクラス
-次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、呼出し元を具体的なオブジェクトの詳細から分離す事ができます。
-#### ServerAccessorsFactory
+次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、呼出し元を具体的なオブジェクトの詳細から分離する事ができます。
+#### ServerAccessorsFactory：APIサーバー利用時共通
 ```
 public class ServerAccessorsFactory : IAccessorsFactory
 {
     public IAccessors CreateAccessors(string siteCode)
     {
+        // 具象ファクトリなのでここでインスタンス化
         return new ServerAccessors(siteCode);
     }
 }
 ```
-#### ClientAccessorsFactory
+#### ClientAccessorsFactory：クライアントECサイト別
 ```
 public class ClientAccessorsFactory : IAccessorsFactory
 {
     public IAccessors CreateAccessors(string siteCode)
     {
+        // 具象ファクトリなのでここでインスタンス化
         return new ClientAccessors(siteCode);
     }
 }
 ```
 
 ### IAccesors インターフェース：抽象プロダクトクラス
-いよいよプロダクトの生成ですが、ここでもまずプロダクトの抽象クラスを呼び出し、具体的なオブジェクト群の生成を分離します。
+いよいよプロダクトの生成ですが、ここでもまずプロダクトの抽象クラスを呼び出し、具体的なオブジェクト群の生成をこちらから分離していきます。
 ```
 public interface IAccesors
 {
+    //抽象プロダクトなので最終的に具象化するメソッドを指示する
     public string GetCode();
     public string GetConnectionString();
     public IConfigurationRoot GetAppsettings();
@@ -125,32 +129,41 @@ public interface IAccesors
 }
 ```
 
-### xxxAccesors ：具象製品クラス
+### xxxAccesors ：具象プロダクトクラス
 最後に具象クラスを抽象クラスの制約に違反しない範囲で自由に実装していく事ができます。今回の例ではAPIサーバーのアクセサを使用して購入処理を行う事はないので購入時に使用するLockobjectは生成されませんが、SiteAccesor側ではロックオブジェクトを生成している等違いを持たせる事ができています。
+また、カプセル化されたGettterのみ定義し値はコンストラクタつまりファクトリからインスタンス化された時にしか設定できない設計となります。
 #### ServerAccesors
 ```
 public class ServerAccesors : IAccesors
 {
 #region Init(Field, Property, Constructor)
-private string _site;
+private string _SITE_CD;
 private string _connectionString;
 private IConfigurationRoot _configurationRoot;
 private OracleConnection _oracleConnection;
 private LoggerAPI _loggerAPI;
 
+// コンストラクタでアクセサに必要な情報を格納に初期化して以後更新できないようにする
 public ServerAccesors(string siteCode)
 {
-    _site = siteCode;
+    // ECサイトの識別コード
+    _SITE_CD = siteCode;
+    // コンフィグ取得のためのオリジナルクラス
     var fnc = new ConfigUtils();
+    // コンフィグ(.netcoreの場合Appsettings.json)を取得するためのオブジェクト
     _configurationRoot = fnc.BuildConfigurationRoot();
+    // DB接続情報
     _connectionString = fnc.GetConnectionString("");
+    // DBコネクション
     _oracleConnection = new DBUtils().CreateOracleConnection(_connectionString);
+    // API用ロガー
     _loggerAPI = new LoggerAPI("");
 }
 #endregion Init(Field, Property, Constructor)
 
 #region Getterメソッド群
-public string getCode() { return _site; }
+// インターフェイスに定義されたメソッドを定義していくカプセル化しGetterのみ定義
+public string getCode() { return _SITE_CD; }
 public string getConnectionString() { return _connectionString; }
 public IConfigurationRoot getAppsettings() { return _configurationRoot; }
 public OracleConnection getConnection() { return _oracleConnection; }
@@ -166,7 +179,7 @@ public object getLockObject() { return null; }
 public class ClientAccesors : IAccesors
 {
 #region Init(Field, Property, Constructor)
-private string _SITE { get; } = "";
+private string _SITE_CD { get; } = "";
 private string _connectionStrings { get; } = "";
 private IConfigurationRoot _configurationRoot { get; } = null!;
 private OracleConnection _oracleConnection { get; } = null!;
@@ -177,20 +190,29 @@ private static object _LockObjectFUGA { get; } = new object();
 private static object _LockObjectPIYO { get; } = new object();
 private static object _LockObjectHOGE { get; } = new object();
 
-public ClientAccesors(string iSITE)
+// コンストラクタでアクセサに必要な情報を格納に初期化して以後更新できないようにする
+public ClientAccesors(string iSITE_CD)
 {
+    // コンフィグ取得のためのオリジナルクラス
     var fnc = new ConfigUtils();
-    _SITE = iSITE;
+    // サイトのコード（API共通は空）
+    _SITE_CD = iSITE_CD;
+    // コンフィグ(.netcoreの場合Appsettings.json)を取得するためのオブジェクト
     _configurationRoot = fnc.BuildConfigurationRoot();
-    _connectionStrings = fnc.GetConnectionString(iSITE)!;
+    // DB接続文字列
+    _connectionStrings = fnc.GetConnectionString(iSITE_CD)!;
+    // DBコネクション
     _oracleConnection = new DBUtils().CreateOracleConnection(_connectionStrings);
+    // APIDBへのロガー
     _loggerAPI = new LoggerAPI("");
-    _loggerClient = new LoggerClient(iSITE);
+    // クライアントサイトへのロガー
+    _loggerClient = new LoggerClient(iSITE_CD);
 }
 #endregion Init(field, property, constructor)
 
 #region Getterメソッド群
-public string getCode() { return _SITE; }
+// インターフェイスに定義されたメソッドを定義していく（カプセル化）
+public string getCode() { return _SITE_CD; }
 public string getConnectionString() { return _connectionStrings; }
 public IConfigurationRoot getAppsettings() { return _configurationRoot; }
 public OracleConnection getConnection() { return _oracleConnection; }
@@ -199,6 +221,7 @@ public LoggerClient getLoggerClient() { return _loggerClient; }
 #endregion Getterメソッド群
 
 #region その他のメソッド群
+// サイト毎にロックオブジェクトを取得
 public object getLockObject()
 {
     object wLockObject;
