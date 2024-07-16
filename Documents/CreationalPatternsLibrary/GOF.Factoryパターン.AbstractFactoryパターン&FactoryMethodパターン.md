@@ -10,7 +10,7 @@ GOFの中でも特に初めて設計と実装に挑戦した時は難しいと�
 既存のクライアントコード(呼出元)に影響を与えずに拡張可能できたりテストが容易だったりと良い事ずくめですが、必要以上に複雑になるので小規模プロジェクトには不向きだったり、抽象クラスの制限上具象クラスの柔軟なカスタマイズに支障がでる場合があるので注意が必要です。
 
 #### Abstract Factoryパターンの要素
-以下の要素が挙げられます。必ずしもAbstractクラスを使用しなければならないわけではなくInterfaceであっても問題ないので今回はC#のため抽象側はInterfaceで統一しています。
+構成要素として以下の要素が挙げられます。必ずしもAbstractクラスを使用しなければならないわけではなくInterfaceであっても問題ないので今回はC#のため抽象側はInterfaceで統一しています。
 
 - 抽象ファクトリ (Abstract Factory): 関連する一連のオブジェクトを生成するためのインターフェースを定義します。
 - 具体ファクトリ (Concrete Factory): 抽象ファクトリインターフェースを実装し、具体的なオブジェクトを生成します。
@@ -80,7 +80,7 @@ Abstract Factory パターンは関連するオブジェクトファミリーを
 
 
 ### IAccesorsFactory インターフェース：抽象ファクトリクラス 
-まずは、抽象ファクトリクラスです。続くxxxAccesorsFactoryにより実装されます。
+まずは、抽象ファクトリクラスです。ここでインターフェースを定義し、続くxxxAccesorsFactoryにより実装されます。
 ```
 public interface IAccessorsFactory
 {
@@ -89,7 +89,7 @@ public interface IAccessorsFactory
 }
 ```
 ### xxxAccesorsFactory インターフェース: 具象ファクトリクラス
-次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、呼出し元を具体的なオブジェクトの詳細から分離する事ができます。
+次に、抽象ファクトリを実装するためにServerAccesorsFactory(APIサーバーを利用する上で共通のアクセサー) と ClientAccesorsFactory（クライアント側ECサイトの毎に異なるアクセサー）を定義していきます。本クラスの CreateAccessors メソッドは、Factory Methodパターンでそれぞれのクラスが異なる種類の IAccesors インスタンスを生成するために使用しています。これにより、具体的なオブジェクトのインスタンスを生成する責任がサブクラスに移譲され、呼出し元を具体的なオブジェクトの詳細部から分離する事ができます。
 #### ServerAccessorsFactory：APIサーバー利用時共通
 ```
 public class ServerAccessorsFactory : IAccessorsFactory
@@ -221,7 +221,7 @@ public LoggerClient getLoggerClient() { return _loggerClient; }
 #endregion Getterメソッド群
 
 #region その他のメソッド群
-// サイト毎にロックオブジェクトを取得
+// サイト毎にロックオブジェクトを取得 ※内容はシングルトンパターンで別途い解説あり
 public object getLockObject()
 {
     object wLockObject;
