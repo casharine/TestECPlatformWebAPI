@@ -2,7 +2,7 @@
 
 ## はじめに
 
-社内プロジェクトでは、ビジネスロジック層からエラーなどののレスポンスの返し方がよろしくなく、レスポンスメッセージがハードコーディングされ、同じコードでソースの箇所によって異なるメッセージが返ってくる事さえありました。これを改善したいと考えC#にはDisplayEnumというものを知りレスポンスのコード：メッセージを1対1で管理するようにしました。このコードでは例えばレスポンスコードから動的にレスポンスメッセージを生成できるようにしております。
+社内プロジェクトでは、ビジネスロジック層からエラーなどのレスポンスの返し方がよろしくなく、レスポンスメッセージがハードコーディングされ、同じコードでソースの箇所によって異なるメッセージが返ってくる事さえありました。これを改善したいと考えC#にはDisplayEnumというものを知りレスポンスのコード：メッセージを1対1で管理するようにしました。このコードでは例えばレスポンスコードから動的にレスポンスメッセージを生成できるようにしております。
 
 ### メリット
 - クライアント側ソースの可読性が高い
@@ -25,13 +25,13 @@
 ### クライアント側呼出部と取得結果
 クライアント側から以下のように型やkey,valueを入力すると取得できるようにしています
 ```
-// keyからvalueを取得：PurchaseRes.LackOfItemError to -1000
+// keyからvalueを取得：［PurchaseRes.LackOfItemError］から［-1000］を取得する
 int responseCode = Convert.ToInt32(PurchaseRes.LackOfItemError);
 
-// Keyから表示メッセージを取得：PurchaseRes.LackOfItemError to この商品は売り切れのため、購入できませんでした。
+// Keyから表示メッセージを取得：［PurchaseRes.LackOfItemError］から［この商品は売り切れのため、購入できませんでした。］を取得する
 string responseMessage = CommonUtils.DisplayEnum(PurchaseRes.LackOfItemError);
 
-// valueから表示名を取得:-1000 to この商品は売り切れのため、購入できませんでした。
+// valueから表示名を取得:［-1000］から［この商品は売り切れのため、購入できませんでした。］を取得する。
 responseCode = -1000; 
 string responseMessage = CommonUtils.DisplayEnumByInt(new PurchaseRes(), responseCode);
 ```
@@ -43,13 +43,14 @@ APIRes、PurchaseRes等任意のEnumに対応できるようジェネリクス�
 ```
 public static string DisplayEnum<T>(T enumKey) where T : Enum
 {
-    if (enumKey == null) throw new ArgumentNullException(nameof(enumKey));
-
+    // enumのkey部分を取得
     string internalFormat = enumKey.ToString();
     if (string.IsNullOrEmpty(internalFormat)) throw new ArgumentException("Invalid enum key");
 
+    // 表示メッセージ部を取得
     var dispAttribute = enumKey.GetType().GetField(internalFormat)?.GetCustomAttribute<DisplayAttribute>();
 
+    // DisplayAttributeの表示メッセージを返す、なければenumの名前を返す
     return dispAttribute?.Name ?? internalFormat;
 }
 ```
@@ -59,13 +60,26 @@ public static string DisplayEnum<T>(T enumKey) where T : Enum
 ```
 public static string DisplayEnumByInt<T>(T enumType, int val, string outsideMsg = "") where T : Enum
 {
+    // Enumの値からキーを取得
     var key = (T)Enum.ToObject(typeof(T), val);
+    // Enumのキーから上記関数を呼び出し表示メッセージを取得
     var msg = DisplayEnum(key);
-
+    // 表示メッセージを入れ子構造にできる
     msg = outsideMsg != "" ? $"{outsideMsg} [コード：{val}] [メッセージ：{msg}]" : msg;
 
     return msg;
 }
+```
+
+- outsideMsg を使用し入れ子にした例
+
+```
+var outsideMsg = "'エラー内容：[コード： -9000], [メッセージ：外部連携エラーです] \r\n 連携先エラー内容：";
+```
+
+```
+エラー内容：[コード： -9000], [メッセージ：外部連携エラーです] 
+連携先エラー内容：[コード： -1000], [メッセージ：この商品は売り切れのため、購入できませんでした。] 
 ```
 
 ### ENUM定義部
