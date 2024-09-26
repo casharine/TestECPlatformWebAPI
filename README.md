@@ -2,9 +2,10 @@
 
 ## はじめに
 これまで自身が作成した関数やよく使用した技術をポートフォリオとして一つのプロジェクトにまとめました。基本的にいくつかリポジトリはありますがこちらを見ていただければ充分だと思います。
-
 本リポジトリはOpenAPI(RESTfulAPI)の基盤部構築における工夫をまとめた技術資料で複数のECサイトが連携するプラットフォームを例としています。 ※ ビジネスロジックはありません
-GOFの生成パターンを一度に全て使用してみたいと思い、API基盤部のオブジェクト生成部に主に適用しています。
+
+以前ECサイトのAPIへのマイグレート案件のメインエンジニアを務めた際に社内で活用できていなかったGOFの生成パターンをAPI基部に取り入れた経験がありした。
+そこでポートフォーリオと研鑽を兼ねGOFの生成パターンを一度に全て使用してみたいと思い、API基盤部のオブジェクト生成部に主に適用しています。
 
 以下では本APIのアクセスオブジェクト群であるAccesors生成を中心に解説していますが、全て見ていただくのは大変ですので
 ##### [GitLink(click here)：Factoryパターン.AbstractFactoryパターン](https://github.com/casharine/TestECPlatformWebAPI/blob/main/Documents/CreationalPatternsLibrary/GOF.Factory%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3.AbstractFactory%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%26FactoryMethod%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3.md)
