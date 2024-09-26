@@ -12,7 +12,7 @@
 
  ##### [GitLink(click here)：その他.DisplayEnumsレスポンスステータスを賢く返したい](https://github.com/casharine/TestECPlatformWebAPI/blob/main/Documents/MyComonLibrary/DisplayEnums%E3%83%AC%E3%82%B9%E3%83%9D%E3%83%B3%E3%82%B9%E3%82%B9%E3%83%86%E3%83%BC%E3%82%BF%E3%82%B9%E3%82%92%E8%B3%A2%E3%81%8F%E8%BF%94%E3%81%97%E3%81%9F%E3%81%84.md)
 
-あたりだけでも御覧いただけると幸いです。
+あたりだけでも御覧いただけますと幸いです。
 
 ソース中には他にもGOFを適用している箇所やそれ以外にもオリジナルのレスポンスステータスの返し方や各種共通関数も多数作成していますのでよろしければ併せましてご確認ください。
 
